@@ -10,10 +10,12 @@ describe('BannerForm', () => {
 
   it('renders with default values', () => {
     const wrapper = mount(BannerForm)
-    
+
     // Test initial state
     expect(wrapper.find('h1').text()).toContain("Saksham's Customizable Banner")
-    expect(wrapper.find('[class*="fixed top-0"]').element.style.backgroundColor).toBe('rgb(59, 130, 246)')
+    expect(wrapper.find('[class*="fixed top-0"]').element.style.backgroundColor).toBe(
+      'rgb(59, 130, 246)'
+    )
     expect(wrapper.find('[class*="fixed top-0"]').element.style.opacity).toBe('1')
     expect(wrapper.find('h1').element.style.color).toBe('rgb(255, 255, 255)')
     expect(wrapper.find('h1').element.style.opacity).toBe('1')
@@ -23,17 +25,17 @@ describe('BannerForm', () => {
 
   it('toggles settings form when button is clicked', async () => {
     const wrapper = mount(BannerForm)
-    
+
     expect(wrapper.find('form').exists()).toBe(false)
-    
+
     await wrapper.find('button').trigger('click')
     await wrapper.vm.$nextTick()
-    
+
     expect(wrapper.find('form').exists()).toBe(true)
-    
+
     await wrapper.find('button').trigger('click')
     await wrapper.vm.$nextTick()
-    
+
     expect(wrapper.find('form').exists()).toBe(false)
   })
 
@@ -41,7 +43,7 @@ describe('BannerForm', () => {
     const wrapper = mount(BannerForm)
     await wrapper.find('button').trigger('click')
     await wrapper.vm.$nextTick()
-    
+
     // Set all form values
     await wrapper.find('input[placeholder="Enter new banner text"]').setValue('New Banner')
     await wrapper.findAll('input[type="color"]')[0].setValue('#ff0000')
@@ -49,19 +51,25 @@ describe('BannerForm', () => {
     await wrapper.findAll('input[type="range"]')[0].setValue(0.5)
     await wrapper.findAll('input[type="range"]')[1].setValue(0.7)
     await wrapper.findAll('input[type="range"]')[2].setValue(0.9)
-    await wrapper.find('input[type="url"]').setValue('https://tinypng.com/images/social/website.jpg')
-    
+    await wrapper
+      .find('input[type="url"]')
+      .setValue('https://tinypng.com/images/social/website.jpg')
+
     await wrapper.find('form').trigger('submit.prevent')
     await wrapper.vm.$nextTick()
 
     // Verify all updates
     expect(wrapper.find('h1').text()).toBe('New Banner')
-    expect(wrapper.find('[class*="fixed top-0"]').element.style.backgroundColor).toBe('rgb(255, 0, 0)')
+    expect(wrapper.find('[class*="fixed top-0"]').element.style.backgroundColor).toBe(
+      'rgb(255, 0, 0)'
+    )
     expect(wrapper.find('[class*="fixed top-0"]').element.style.opacity).toBe('0.5')
     expect(wrapper.find('h1').element.style.color).toBe('rgb(0, 255, 0)')
     expect(wrapper.find('h1').element.style.opacity).toBe('0.7')
     expect(wrapper.find('img').element.style.opacity).toBe('0.9')
-    expect(wrapper.find('img').attributes('src')).toBe('https://tinypng.com/images/social/website.jpg')
+    expect(wrapper.find('img').attributes('src')).toBe(
+      'https://tinypng.com/images/social/website.jpg'
+    )
 
     // Verify localStorage
     const savedSettings = JSON.parse(localStorage.getItem('bannerSettings'))
@@ -89,15 +97,15 @@ describe('BannerForm', () => {
       onload: vi.fn()
     }
     global.FileReader = vi.fn(() => mockFileReader)
-    
+
     const fileInput = wrapper.find('input[type="file"]')
     Object.defineProperty(fileInput.element, 'files', { value: [file] })
     await fileInput.trigger('change')
-    
+
     mockFileReader.onload({ target: { result: 'data:image/png;base64,test' } })
     await wrapper.find('form').trigger('submit.prevent')
     await wrapper.vm.$nextTick()
-    
+
     expect(wrapper.find('img').attributes('src')).toBe('data:image/png;base64,test')
   })
 
@@ -125,14 +133,16 @@ describe('BannerForm', () => {
     await wrapper.findAll('input[type="range"]')[0].setValue(0.2)
     await wrapper.findAll('input[type="range"]')[1].setValue(0.3)
     await wrapper.findAll('input[type="range"]')[2].setValue(0.4)
-    await wrapper.find('input[type="url"]').setValue('https://tinypng.com/images/social/website.jpg')
+    await wrapper
+      .find('input[type="url"]')
+      .setValue('https://tinypng.com/images/social/website.jpg')
 
     await wrapper.find('button.bg-gray-300').trigger('click')
     await wrapper.vm.$nextTick()
 
     await wrapper.find('button').trigger('click')
     await wrapper.vm.$nextTick()
-    
+
     expect(wrapper.find('input[placeholder="Enter new banner text"]').element.value).toBe('')
     expect(wrapper.findAll('input[type="color"]')[0].element.value).toBe('#3b82f6')
     expect(wrapper.findAll('input[type="color"]')[1].element.value).toBe('#ffffff')
@@ -144,25 +154,30 @@ describe('BannerForm', () => {
 
   it('resets to default values and clears localStorage', async () => {
     const wrapper = mount(BannerForm)
-    
-    localStorage.setItem('bannerSettings', JSON.stringify({
-      text: "Custom Text",
-      bgColor: '#ff0000',
-      textColor: '#00ff00',
-      image: 'custom.png',
-      bgOpacity: 0.2,
-      textOpacity: 0.3,
-      imageOpacity: 0.4
-    }))
-    
+
+    localStorage.setItem(
+      'bannerSettings',
+      JSON.stringify({
+        text: 'Custom Text',
+        bgColor: '#ff0000',
+        textColor: '#00ff00',
+        image: 'custom.png',
+        bgOpacity: 0.2,
+        textOpacity: 0.3,
+        imageOpacity: 0.4
+      })
+    )
+
     await wrapper.find('button').trigger('click')
     await wrapper.vm.$nextTick()
-    
+
     await wrapper.find('button.bg-amber-500').trigger('click')
     await wrapper.vm.$nextTick()
 
     expect(wrapper.find('h1').text()).toContain("Saksham's Customizable Banner")
-    expect(wrapper.find('[class*="fixed top-0"]').element.style.backgroundColor).toBe('rgb(59, 130, 246)')
+    expect(wrapper.find('[class*="fixed top-0"]').element.style.backgroundColor).toBe(
+      'rgb(59, 130, 246)'
+    )
     expect(wrapper.find('[class*="fixed top-0"]').element.style.opacity).toBe('1')
     expect(wrapper.find('h1').element.style.color).toBe('rgb(255, 255, 255)')
     expect(wrapper.find('h1').element.style.opacity).toBe('1')
@@ -173,32 +188,37 @@ describe('BannerForm', () => {
 
   it('stops wiggle animation after first click', async () => {
     const wrapper = mount(BannerForm)
-    
+
     const button = wrapper.find('button')
     expect(button.classes()).toContain('motion-safe:animate-wiggle')
-    
+
     await button.trigger('click')
     await wrapper.vm.$nextTick()
-    
+
     expect(button.classes()).not.toContain('motion-safe:animate-wiggle')
     expect(button.classes()).not.toContain('hover:motion-safe:animate-wiggle')
   })
 
   it('loads saved settings on mount', async () => {
-    localStorage.setItem('bannerSettings', JSON.stringify({
-      text: "Saved Banner",
-      bgColor: '#123456',
-      textColor: '#654321',
-      image: 'saved.png',
-      bgOpacity: 0.6,
-      textOpacity: 0.7,
-      imageOpacity: 0.8
-    }))
-    
+    localStorage.setItem(
+      'bannerSettings',
+      JSON.stringify({
+        text: 'Saved Banner',
+        bgColor: '#123456',
+        textColor: '#654321',
+        image: 'saved.png',
+        bgOpacity: 0.6,
+        textOpacity: 0.7,
+        imageOpacity: 0.8
+      })
+    )
+
     const wrapper = mount(BannerForm)
-    
+
     expect(wrapper.find('h1').text()).toBe('Saved Banner')
-    expect(wrapper.find('[class*="fixed top-0"]').element.style.backgroundColor).toBe('rgb(18, 52, 86)')
+    expect(wrapper.find('[class*="fixed top-0"]').element.style.backgroundColor).toBe(
+      'rgb(18, 52, 86)'
+    )
     expect(wrapper.find('[class*="fixed top-0"]').element.style.opacity).toBe('0.6')
     expect(wrapper.find('h1').element.style.color).toBe('rgb(101, 67, 33)')
     expect(wrapper.find('h1').element.style.opacity).toBe('0.7')

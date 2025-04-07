@@ -1,0 +1,9 @@
+Copy
+
+/dist
+/node_modules
+/coverage
+*.html
+*.md
+*.svg
+*.sh

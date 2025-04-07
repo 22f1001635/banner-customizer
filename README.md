@@ -6,85 +6,81 @@ A Vue.js application that lets users create and customize banners with dynamic t
 Features
 --------
 
--   Customizable banner text, background/text colors, and opacities
--   Image upload or URL input with validation
--   Toggleable settings form with animations
--   LocalStorage persistence for user settings
--   Responsive design with Tailwind CSS
--   Reset to defaults and cancel changes functionality
--   Error handling for invalid image URLs
+- Customizable banner text, background/text colors, and opacities
+- Image upload or URL input with validation
+- Toggleable settings form with animations
+- LocalStorage persistence for user settings
+- Responsive design with Tailwind CSS
+- Reset to defaults and cancel changes functionality
+- Error handling for invalid image URLs
 
 Technologies
 ------------
 
--   Vue 3
--   Tailwind CSS
--   Vitest (Testing)
--   Vite (Build Tool)
+- Vue 3
+- Tailwind CSS
+- Vitest (Testing)
+- Vite (Build Tool)
 
 Setup
 -----
 
-1.  **Clone the repository**
+1. **Clone the repository**
 
-    ```
-    git clone https://github.com/your-username/banner-customizer.git
-    cd banner-customizer 
-    ```
+   ```
+   git clone https://github.com/22f1001635/banner-customizer.git
+   cd banner-customizer
+   ```
+2. **Install dependencies**
 
-2.  **Install dependencies**
+   ```
+   npm install
+   ```
+3. **Run the development server**
 
-    ```
-    npm install
-    ```
+   ```
+   npm run dev
+   ```
+4. **Build for production**
 
-3.  **Run the development server**
-
-    ```
-    npm run dev
-    ```
-
-4.  **Build for production**
-
-    ```
-    npm run build
-    ```
+   ```
+   npm run build
+   ```
 
 Testing
 -------
 
--   **Run all tests**
+- **Run all tests**
 
-    ```
-    npm test
-    ```
+  ```
+  npm test
+  ```
+- **Run tests with coverage**
 
--   **Run tests with coverage**
-
-    ```
-    npm run coverage
-    ```
+  ```
+  npm run coverage
+  ```
 
 Tests include:
 
--   Component rendering
--   Form interactions
--   State management
--   LocalStorage operations
--   Error handling
--   Animation behavior
+- Component rendering
+- Form interactions
+- State management
+- LocalStorage operations
+- Error handling
+- Animation behavior
 
 Contributing
 ------------
 
-1.  Fork the repository
-2.  Create a feature branch (`git checkout -b feature/your-feature`)
-3.  Commit changes (`git commit -m 'Add amazing feature'`)
-4.  Push to the branch (`git push origin feature/your-feature`)
-5.  Open a Pull Request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
 
 Please ensure:
 
--   Code follows existing patterns
--   Tests are added/updated for new features
--   Documentation is updated if needed
+- Code follows existing patterns
+- Tests are added/updated for new features
+- Documentation is updated if needed

@@ -8,10 +8,7 @@ export default defineConfig({
   plugins: [vue()],
   css: {
     postcss: {
-      plugins: [
-        tailwindcss(),
-        autoprefixer()
-      ]
+      plugins: [tailwindcss(), autoprefixer()]
     }
   },
   test: {

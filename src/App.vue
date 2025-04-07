@@ -1,5 +1,5 @@
 <script setup>
-import BannerForm from './components/bannerform.vue'
+  import BannerForm from './components/bannerform.vue'
 </script>
 
 <template>

@@ -13,6 +13,8 @@ Features
 - Responsive design with Tailwind CSS
 - Reset to defaults and cancel changes functionality
 - Error handling for invalid image URLs
+- ESLint for code quality
+- Prettier for code formatting
 
 Technologies
 ------------
@@ -21,6 +23,8 @@ Technologies
 - Tailwind CSS
 - Vitest (Testing)
 - Vite (Build Tool)
+- ESLint (Linting)
+- Prettier (Code Formatting)
 
 Setup
 -----
@@ -45,6 +49,20 @@ Setup
 
    ```
    npm run build
+   ```
+
+
+Development Tools
+----------------
+
+- **Run linter (ESLint)**
+   ```
+   npm run lint
+   ```
+
+- **Format code (Prettier)**
+   ```
+   npm run format
    ```
 
 Testing
@@ -84,3 +102,5 @@ Please ensure:
 - Code follows existing patterns
 - Tests are added/updated for new features
 - Documentation is updated if needed
+- Code passes linting (`npm run lint`)
+- Code is properly formatted (`npm run format`)

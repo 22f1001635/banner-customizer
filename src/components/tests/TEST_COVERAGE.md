@@ -14,6 +14,14 @@
 | **Stops wiggle animation** | Verifies animation classes are removed after first click |
 | **Loads saved settings** | Ensures localStorage settings are applied on component mount |
 
+## Linting & Formatting Tests
+
+| Test Case | Description |
+|-----------|-------------|
+| **ESLint compliance** | Verifies code passes ESLint with zero warnings |
+| **Prettier formatting** | Ensures consistent code formatting across the project |
+
+
 ## Key Tested Functionalities
 
 1. **State Management**
@@ -35,8 +43,16 @@
    - Animation triggers
    - Responsive layout
 
+5. **Code Quality**
+   - Syntax validation
+   - Style consistency
+   - Best practices enforcement
+
 ## Coverage Report
 Run `npm run coverage` to generate detailed coverage reports, including:
 - Lines covered
 - Branches tested
 - Uncovered code paths
+- Linting/formatting compliance
+
+> **Note**: The coverage report focuses on functional tests only. For linting results, run `npm run lint` separately.

@@ -7,6 +7,9 @@ export default [
   js.configs.recommended,
   ...vuePlugin.configs['flat/recommended'],
   {
+    ignores: ['dist/**/*', '**/coverage/**', '**/node_modules/**']
+  },
+  {
     files: ['**/*.js', '**/*.vue'],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -54,7 +57,9 @@ export default [
       'vue/multi-word-component-names': 'off',
       'vue/require-default-prop': 'off',
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-      'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+      'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+      'no-unused-vars': 'warn',
+      'no-prototype-builtins': 'off'
     }
   },
   prettierConfig

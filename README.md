@@ -1,30 +1,50 @@
-Customizable Banner Project
-===========================
+# Customizable Banner Project
 
-A Vue.js application that lets users create and customize banners with dynamic text, colors, opacities, and images. Settings persist in localStorage, and animations enhance user interaction.
+A Vue.js application that lets users create and customize banners with dynamic text, colors, opacities, and images. Includes undo/redo functionality, preset templates, and persistent settings. 
 
-Features
---------
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://banner-customizer-git-main-saksham-sirohis-projects.vercel.app/)
 
-- Customizable banner text, background/text colors, and opacities
-- Image upload or URL input with validation
-- Toggleable settings form with animations
-- LocalStorage persistence for user settings
-- Responsive design with Tailwind CSS
-- Reset to defaults and cancel changes functionality
-- Error handling for invalid image URLs
-- ESLint for code quality
-- Prettier for code formatting
+## Features
 
-Technologies
-------------
+- **Complete Customization**:
+  - Adjustable banner text
+  - Background and text color pickers
+  - Opacity controls for background, text, and images
+  - Image upload (file or URL) with validation
+  - Aspect ratio and shape controls
 
-- Vue 3
-- Tailwind CSS
-- Vitest (Testing)
-- Vite (Build Tool)
-- ESLint (Linting)
-- Prettier (Code Formatting)
+- **Advanced Functionality**:
+  - Undo/redo operations with 20-step history
+  - 6 preset templates for quick styling
+  - LocalStorage persistence for user settings
+  - Responsive design works on all devices
+
+- **User Experience**:
+  - Toggleable settings panel with animations
+  - Real-time preview of changes
+  - Reset to defaults option
+  - Error handling for invalid inputs
+  - Motion-safe animations
+
+## Technologies
+
+- **Core**:
+  - Vue 3 (Composition API)
+  - Tailwind CSS
+  - Vite (Build Tool)
+
+- **Testing**:
+  - Vitest (Unit Testing)
+  - Testing Library (Component Testing)
+
+- **Quality**:
+  - ESLint (Code Linting)
+  - Prettier (Code Formatting)
+
+## Live Demo
+
+The application is hosted on Vercel:  
+👉 [https://banner-customizer-git-main-saksham-sirohis-projects.vercel.app/](https://banner-customizer-git-main-saksham-sirohis-projects.vercel.app/)
 
 Setup
 -----
@@ -51,19 +71,19 @@ Setup
    npm run build
    ```
 
-
 Development Tools
-----------------
+-----------------
 
 - **Run linter (ESLint)**
-   ```
-   npm run lint
-   ```
 
+  ```
+  npm run lint
+  ```
 - **Format code (Prettier)**
-   ```
-   npm run format
-   ```
+
+  ```
+  npm run format
+  ```
 
 Testing
 -------
@@ -87,6 +107,8 @@ Tests include:
 - LocalStorage operations
 - Error handling
 - Animation behavior
+- Undo/redo functionality
+- Template application
 
 Contributing
 ------------

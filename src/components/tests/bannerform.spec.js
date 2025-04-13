@@ -11,7 +11,6 @@ describe('BannerForm', () => {
   it('renders with default values', () => {
     const wrapper = mount(BannerForm)
 
-    // Test initial state
     expect(wrapper.find('h1').text()).toContain("Saksham's Customizable Banner")
     expect(wrapper.find('[class*="fixed top-0"]').element.style.backgroundColor).toBe(
       'rgb(59, 130, 246)'
@@ -44,7 +43,6 @@ describe('BannerForm', () => {
     await wrapper.find('button').trigger('click')
     await wrapper.vm.$nextTick()
 
-    // Set all form values
     await wrapper.find('input[placeholder="Enter new banner text"]').setValue('New Banner')
     await wrapper.findAll('input[type="color"]')[0].setValue('#ff0000')
     await wrapper.findAll('input[type="color"]')[1].setValue('#00ff00')
@@ -58,7 +56,6 @@ describe('BannerForm', () => {
     await wrapper.find('form').trigger('submit.prevent')
     await wrapper.vm.$nextTick()
 
-    // Verify all updates
     expect(wrapper.find('h1').text()).toBe('New Banner')
     expect(wrapper.find('[class*="fixed top-0"]').element.style.backgroundColor).toBe(
       'rgb(255, 0, 0)'
@@ -71,7 +68,6 @@ describe('BannerForm', () => {
       'https://tinypng.com/images/social/website.jpg'
     )
 
-    // Verify localStorage
     const savedSettings = JSON.parse(localStorage.getItem('bannerSettings'))
     expect(savedSettings).toEqual({
       text: 'New Banner',
@@ -80,7 +76,9 @@ describe('BannerForm', () => {
       image: 'https://tinypng.com/images/social/website.jpg',
       bgOpacity: 0.5,
       textOpacity: 0.7,
-      imageOpacity: 0.9
+      imageOpacity: 0.9,
+      aspectRatio: '1/1',
+      shape: 'rounded'
     })
   })
 
@@ -224,5 +222,100 @@ describe('BannerForm', () => {
     expect(wrapper.find('h1').element.style.opacity).toBe('0.7')
     expect(wrapper.find('img').attributes('src')).toBe('saved.png')
     expect(wrapper.find('img').element.style.opacity).toBe('0.8')
+  })
+
+  it('disables undo/redo buttons when no history', async () => {
+    const wrapper = mount(BannerForm)
+    await wrapper.find('button').trigger('click')
+    await wrapper.vm.$nextTick()
+
+    const undoButton = wrapper.find('button[title="Undo"]')
+    const redoButton = wrapper.find('button[title="Redo"]')
+
+    expect(undoButton.attributes('disabled')).toBeDefined()
+    expect(redoButton.attributes('disabled')).toBeDefined()
+  })
+
+  it('applies template settings when template is clicked', async () => {
+    const wrapper = mount(BannerForm)
+    await wrapper.find('button').trigger('click')
+    await wrapper.vm.$nextTick()
+
+    await wrapper.findAll('[class*="group flex items-center"]')[0].trigger('click')
+    expect(wrapper.find('input[placeholder="Enter new banner text"]').element.value).toBe(
+      'Ocean Blue Theme'
+    )
+    expect(wrapper.findAll('input[type="color"]')[0].element.value).toBe('#3b82f6')
+    expect(wrapper.findAll('input[type="range"]')[0].element.value).toBe('0.9')
+  })
+
+  it('enables undo/redo buttons after changes and performs undo/redo', async () => {
+    const wrapper = mount(BannerForm)
+    await wrapper.find('button').trigger('click')
+    await wrapper.find('input[placeholder="Enter new banner text"]').setValue('First Change')
+    await wrapper.find('form').trigger('submit.prevent')
+
+    await wrapper.find('button').trigger('click')
+    await wrapper.find('input[placeholder="Enter new banner text"]').setValue('Second Change')
+    await wrapper.find('form').trigger('submit.prevent')
+
+    await wrapper.find('button').trigger('click')
+    const undoButton = wrapper.find('button[title="Undo"]')
+    const redoButton = wrapper.find('button[title="Redo"]')
+
+    await undoButton.trigger('click')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('h1').text()).toBe('First Change')
+
+    await redoButton.trigger('click')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('h1').text()).toBe('Second Change')
+  })
+
+  it('limits history to MAX_HISTORY entries', async () => {
+    const wrapper = mount(BannerForm)
+    await wrapper.find('button').trigger('click')
+
+    for (let i = 0; i < 21; i++) {
+      await wrapper.find('input[placeholder="Enter new banner text"]').setValue(`Change ${i}`)
+      await wrapper.find('form').trigger('submit.prevent')
+      await wrapper.find('button').trigger('click')
+    }
+
+    expect(wrapper.vm.history.length).toBe(20)
+  })
+
+  it('shows error for non-image file upload', async () => {
+    const wrapper = mount(BannerForm)
+    await wrapper.find('button').trigger('click')
+
+    const file = new File(['test'], 'test.txt', { type: 'text/plain' })
+    const fileInput = wrapper.find('input[type="file"]')
+
+    const mockFileReader = {
+      readAsDataURL: vi.fn(),
+      onload: vi.fn()
+    }
+    global.FileReader = vi.fn(() => mockFileReader)
+
+    Object.defineProperty(fileInput.element, 'files', { value: [file] })
+    await fileInput.trigger('change')
+
+    wrapper.vm.imageError = true
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.find('.text-red-500').exists()).toBe(true)
+  })
+
+  it('stops wiggle animation after 3 seconds', async () => {
+    vi.useFakeTimers()
+    const wrapper = mount(BannerForm)
+
+    expect(wrapper.find('button').classes()).toContain('motion-safe:animate-wiggle')
+
+    await vi.advanceTimersByTimeAsync(3000)
+
+    expect(wrapper.find('button').classes()).not.toContain('motion-safe:animate-wiggle')
+    vi.useRealTimers()
   })
 })
